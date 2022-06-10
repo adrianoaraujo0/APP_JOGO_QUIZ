@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class Resposta extends StatelessWidget {
@@ -12,9 +14,11 @@ class Resposta extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
         ),
         onPressed: onSelect,
-        child: Text(nomeButao),
+        child: Text(nomeButao,
+        style: TextStyle(fontSize: 17),),
       ),
     );
   }

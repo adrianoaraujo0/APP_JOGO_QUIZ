@@ -3,19 +3,28 @@ import 'questao.dart';
 import 'resposta.dart';
 
 class Questionario extends StatelessWidget {
-  Questionario(this.perguntasContador, this.perguntas, this.respostas,
-      this.resposta, {Key? key}) : super(key: key);
+  Questionario(
+      {required this.perguntasContador,
+      required this.perguntas,
+      required this.quandoResponder,
+      Key? key})
+      : super(key: key);
 
-  List perguntas = [];
-  List respostas = [];
-  int perguntasContador;
-  void Function() resposta;
+  final List<Map<String, Object>> perguntas;
+  var perguntasContador;
+  final void Function() quandoResponder;
 
+  bool get validador {
+    print("contador: ${perguntasContador}, lista: ${perguntas.length}");
+    return perguntasContador < perguntas.length;
+  }
 
   @override
   Widget build(BuildContext context) {
 
-
+    List<Map<String, Object>> respostas = validador
+        ? perguntas[perguntasContador].cast()['resposta']
+        : [];
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -26,7 +35,8 @@ class Questionario extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ...respostas.map((e) => Resposta(e, resposta)).toList(),
+            ...respostas
+                .map((resp) => Resposta(resp['texto'].toString(), quandoResponder)).toList(),
           ],
         ),
       ),

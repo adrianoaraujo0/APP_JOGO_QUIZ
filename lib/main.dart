@@ -21,18 +21,31 @@ class perguntaApp extends StatefulWidget {
 
 class _perguntaAppState extends State<perguntaApp> {
   var perguntasContador = 0;
-  final perguntas = [
+
+  final List<Map<String, Object>> perguntas = [
     {
       "texto": "A coroa de jesus era de: ",
-      "resposta": ["palha", "aço", "metal"],
+      "resposta": [
+        {"texto": "palha", "nota": 10},
+        {"texto": "aço", "nota": 0},
+        {"texto": "metal", "nota": 0},
+      ],
     },
     {
       "texto": "Qual raiz quadrada de 25:",
-      "resposta": ["6", "5", "4"],
+      "resposta": [
+        {"texto": "6", "nota": 10},
+        {"texto": "5", "nota": 0},
+        {"texto": "4", "nota": 0},
+      ],
     },
     {
       "texto": "Qual o idioma mais falado do mundo:",
-      "resposta": ["inglês", "português", "espanhol"],
+      "resposta": [
+        {"texto":"inglês", "nota":10},
+        {"texto":"português","nota":0},
+        {"texto":"espanhol","nota":0},
+      ],
     }
   ];
 
@@ -51,9 +64,6 @@ class _perguntaAppState extends State<perguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> respostas =
-        validador ? perguntas[perguntasContador].cast()['resposta'] : [];
-    // List widgets = respostas.map((texto) => Resposta(texto, "resposta")).toList();
 
     return Scaffold(
         appBar: AppBar(
@@ -68,7 +78,10 @@ class _perguntaAppState extends State<perguntaApp> {
           centerTitle: true,
         ),
         body: validador
-            ? Questionario(perguntasContador, perguntas, respostas, resposta)
+            ? Questionario(
+                perguntasContador: perguntasContador,
+                perguntas: perguntas,
+                quandoResponder: resposta)
             : Resultado());
   }
 }
