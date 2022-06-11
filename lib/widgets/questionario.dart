@@ -12,19 +12,17 @@ class Questionario extends StatelessWidget {
 
   final List<Map<String, Object>> perguntas;
   var perguntasContador;
-  final void Function() quandoResponder;
+  final void Function(int) quandoResponder;
 
   bool get validador {
-    print("contador: ${perguntasContador}, lista: ${perguntas.length}");
+
     return perguntasContador < perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-
-    List<Map<String, Object>> respostas = validador
-        ? perguntas[perguntasContador].cast()['resposta']
-        : [];
+    List<Map<String, Object>> respostas =
+        validador ? perguntas[perguntasContador].cast()['resposta'] : [];
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -35,8 +33,12 @@ class Questionario extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ...respostas
-                .map((resp) => Resposta(resp['texto'].toString(), quandoResponder)).toList(),
+            ...respostas.map((resp) {
+              return Resposta(
+                resp['texto'].toString(),
+                () => quandoResponder(int.parse(resp["pontuacao"].toString())),
+              );
+            }).toList(),
           ],
         ),
       ),

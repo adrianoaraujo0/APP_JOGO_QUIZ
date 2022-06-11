@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Resultado extends StatelessWidget {
-  const Resultado({Key? key}) : super(key: key);
+  const Resultado({required this.pontuacaoTotal, Key? key}) : super(key: key);
+  final int pontuacaoTotal;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Parabéns"),
+      child: Text(
+        "Pontuação total: $pontuacaoTotal",
+        style: TextStyle(fontSize: 40),
+      ),
     );
   }
 }

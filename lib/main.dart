@@ -21,32 +21,54 @@ class perguntaApp extends StatefulWidget {
 
 class _perguntaAppState extends State<perguntaApp> {
   var perguntasContador = 0;
+  int pontuacaoTotal = 0;
 
   final List<Map<String, Object>> perguntas = [
     {
       "texto": "A coroa de jesus era de: ",
       "resposta": [
-        {"texto": "palha", "nota": 10},
-        {"texto": "aço", "nota": 0},
-        {"texto": "metal", "nota": 0},
+        {"texto": "palha", "pontuacao": 10},
+        {"texto": "plástico", "pontuacao": 0},
+        {"texto": "aço", "pontuacao": 0},
+        {"texto": "metal", "pontuacao": 0},
       ],
     },
     {
       "texto": "Qual raiz quadrada de 25:",
       "resposta": [
-        {"texto": "6", "nota": 10},
-        {"texto": "5", "nota": 0},
-        {"texto": "4", "nota": 0},
+        {"texto": "6", "pontuacao": 0},
+        {"texto": "5", "pontuacao": 10},
+        {"texto": "4", "pontuacao": 0},
+        {"texto": "4.5", "pontuacao": 0},
       ],
     },
     {
       "texto": "Qual o idioma mais falado do mundo:",
       "resposta": [
-        {"texto":"inglês", "nota":10},
-        {"texto":"português","nota":0},
-        {"texto":"espanhol","nota":0},
+        {"texto": "inglês", "pontuacao": 10},
+        {"texto": "português", "pontuacao": 0},
+        {"texto": "espanhol", "pontuacao": 0},
+        {"texto": "italiano", "pontuacao": 0},
       ],
-    }
+    },
+    {
+      "texto": "Quantas vezes o brasil foi campeão da copa do mundo:",
+      "resposta": [
+        {"texto": "5", "pontuacao": 10},
+        {"texto": "6", "pontuacao": 0},
+        {"texto": "4", "pontuacao": 0},
+        {"texto": "3", "pontuacao": 0},
+      ],
+    },
+    {
+      "texto": "O steve jobs é o fundador de qual empresa de tecnologia:",
+      "resposta": [
+        {"texto": "Apple", "pontuacao": 10},
+        {"texto": "Windows", "pontuacao": 0},
+        {"texto": "Amazon", "pontuacao": 0},
+        {"texto": "Netflix", "pontuacao": 0},
+      ],
+    },
   ];
 
   bool get validador {
@@ -54,9 +76,10 @@ class _perguntaAppState extends State<perguntaApp> {
     return perguntasContador < perguntas.length;
   }
 
-  void resposta() {
+  void resposta(int pontuacao) {
     if (validador) {
       setState(() {
+        pontuacaoTotal += pontuacao;
         perguntasContador++;
       });
     }
@@ -64,7 +87,6 @@ class _perguntaAppState extends State<perguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           actions: [
@@ -72,6 +94,7 @@ class _perguntaAppState extends State<perguntaApp> {
                 icon: Icon(Icons.refresh),
                 onPressed: () => setState(() {
                       perguntasContador = 0;
+                      pontuacaoTotal = 0;
                     })),
           ],
           title: Text("QUIZ"),
@@ -82,6 +105,8 @@ class _perguntaAppState extends State<perguntaApp> {
                 perguntasContador: perguntasContador,
                 perguntas: perguntas,
                 quandoResponder: resposta)
-            : Resultado());
+            : Resultado(
+                pontuacaoTotal: pontuacaoTotal,
+              ));
   }
 }
